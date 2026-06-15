@@ -1,0 +1,53 @@
+#!/usr/bin/env python3
+
+import json
+import subprocess
+import sys
+
+
+def focused_path(node, path=None):
+    path = [] if path is None else path
+    current = path + [node]
+
+    if node.get("focused"):
+        return current
+
+    for child in node.get("nodes", []) + node.get("floating_nodes", []):
+        found = focused_path(child, current)
+        if found:
+            return found
+
+    return None
+
+
+try:
+    tree = json.loads(subprocess.check_output(["swaymsg", "-t", "get_tree"]))
+except (OSError, subprocess.CalledProcessError, json.JSONDecodeError) as error:
+    print(f"sway-toggle-pair-split: failed to read sway tree: {error}", file=sys.stderr)
+    sys.exit(1)
+
+path = focused_path(tree)
+if not path:
+    sys.exit(0)
+
+target = None
+for node in reversed(path[:-1]):
+    if node.get("type") in {"workspace", "output", "root"}:
+        continue
+    if len(node.get("nodes", [])) == 2:
+        target = node
+        break
+
+if not target:
+    subprocess.run(["swaymsg", "split", "toggle"], check=False)
+    sys.exit(0)
+
+layout = target.get("layout")
+if layout == "splith":
+    command = "move down"
+elif layout == "splitv":
+    command = "move right"
+else:
+    command = "split toggle"
+
+subprocess.run(["swaymsg", command], check=False)

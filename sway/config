@@ -119,7 +119,7 @@ bindsym $mod+Shift+asterisk resize grow   height 40px
 # ---------------------------------------------------------------------------
 # Layout
 # ---------------------------------------------------------------------------
-bindsym $mod+j           exec /home/alkinun/.local/bin/sway-toggle-pair-split
+bindsym $mod+j           exec ~/.local/bin/sway-toggle-pair-split
 bindsym $mod+f           fullscreen
 bindsym $mod+Shift+space focus mode_toggle
 bindsym $mod+a           focus parent
@@ -162,7 +162,7 @@ exec swayidle -w \
 # ---------------------------------------------------------------------------
 # Autostart
 # ---------------------------------------------------------------------------
-exec_always /home/alkinun/.local/bin/sway-autotile
+exec_always ~/.local/bin/sway-autotile
 exec mako
 exec nm-applet --indicator
 
