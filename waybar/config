@@ -1,34 +1,34 @@
 {
     "layer": "top",
     "position": "top",
-    "height": 30,
-    "spacing": 6,
+    "height": 10,
+    "spacing": -16,
 
     "modules-left": ["sway/workspaces", "sway/mode"],
     "modules-center": ["clock"],
     "modules-right": [
         "network",
+        "tray",
         "bluetooth",
         "pulseaudio",
         "battery",
-        "tray"
     ],
 
     "sway/workspaces": {
         "disable-scroll": true,
-        "all-outputs": false,
+        "all-outputs": true,
         "format": "{name}"
     },
 
     "clock": {
-        "format": "{:%a %d %b  %H:%M}",
+        "format": "{:%a %d %b %H:%M}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
     },
 
     "network": {
         "format-wifi": "  {essid} ({signalStrength}%)",
         "format-ethernet": "  {ipaddr}",
-        "format-disconnected": "⚠ Disconnected",
+        "format-disconnected": "Disconnected",
         "on-click": "nm-connection-editor",
         "tooltip-format": "{ifname}: {ipaddr}\n{gwaddr}"
     },
@@ -37,7 +37,7 @@
         "format": " {status}",
         "format-connected": " {device_alias}",
         "format-connected-battery": " {device_alias} {device_battery_percentage}%",
-        "on-click": "blueman-manager",
+        "on-click": "alacritty -e bluetui",
         "tooltip-format": "{controller_alias}\n{num_connections} connected"
     },
 
